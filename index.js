@@ -3,24 +3,46 @@ let computerScore = 0
 let gameRound = 0
 
 
-const gameSelectionChoices = ["rock", "paper", "scissors"]
+/*...... declaring game selection choice array...  */
+const gameSelection = [
+    {
+        value: "rock",
+        logo: `<img src="https://img.icons8.com/office/80/000000/rock.png"/>`
+    },
+    {
+        value: "paper",
+        logo: `<img src="https://img.icons8.com/fluency/96/000000/paper.png"/>`
+    },
+    {
+        value: "scissors",
+        logo: `<img src="https://img.icons8.com/color/96/000000/sewing-scissors.png"/>`
+    }
+]
+/*....................................................... */
+
 const userSelectionButtonEl = document.querySelectorAll(".user-selection")
 const scoreBoardLightEl = document.querySelectorAll(".led-light")
+const display = document.querySelectorAll(".selection-display")
+const userDisplay = document.querySelector("#user-display")
+const computerDisplay = document.querySelector("#computer-display")
 
 
 
 let computerPlay = () => {
-    let randomSelection = gameSelectionChoices[Math.floor(Math.random() * gameSelectionChoices.length)]
+    let randomSelection = gameSelection[Math.floor(Math.random() * gameSelection.length)]
+    // console.log(randomSelection)
     return randomSelection
 }
 
 /* ..............Event Listener for user selection........... */
 userSelectionButtonEl.forEach(option => {
     option.addEventListener("click", () => {
-        let userChoice = option.id
+        let userChoice = gameSelection[option.id]
         let computerChoice = computerPlay()
         gameStart(userChoice, computerChoice)
 
+
+        /* disable button after all rounds completed */
         if (gameRound > 4) {
             for (item in userSelectionButtonEl)
                 userSelectionButtonEl[item].disabled = true
@@ -31,13 +53,14 @@ userSelectionButtonEl.forEach(option => {
 
 let gameStart = (userChoice, computerChoice) => {
     let userResult = ''
-
-    if (userChoice === computerChoice) {
+    let userValue = userChoice.value
+    let computerValue = computerChoice.value
+    if (userValue === computerValue) {
         userResult = 'draw'
     }
 
-    else if (userChoice == 'rock')
-        if (computerChoice == 'paper') {
+    else if (userValue === 'rock')
+        if (computerValue === 'paper') {
             computerScore += 1
             userResult = 'lose'
         }
@@ -46,8 +69,8 @@ let gameStart = (userChoice, computerChoice) => {
             playerScore += 1
         }
 
-    else if (userChoice == 'paper')
-        if (computerChoice == 'rock') {
+    else if (userValue === 'paper')
+        if (computerValue === 'rock') {
             userResult = 'win'
             playerScore += 1
         }
@@ -55,11 +78,10 @@ let gameStart = (userChoice, computerChoice) => {
             userResult = 'lose'
             computerScore += 1
         }
-    else if (userChoice == 'scissors')
+    else if (userValue === 'scissors')
 
-        if (computerChoice == 'rock') {
+        if (computerValue === 'rock') {
             userResult = 'lose'
-            console.log("lose")
             computerScore += 1
         }
         else {
@@ -68,7 +90,38 @@ let gameStart = (userChoice, computerChoice) => {
             playerScore += 1
         }
 
-    /*........... change in LED lights score..... */
+    /* disable button after each click, will only be enable when lights are displayed */
+    for (item in userSelectionButtonEl)
+        userSelectionButtonEl[item].disabled = true
+
+    setTimeout(displaySelection, 200, computerChoice, userChoice, userResult)
+    setTimeout(displayLight, 1500, userResult)
+
+
+
+}
+
+
+let displaySelection = (computerChoice, userChoice) => {
+    display.forEach(element => {
+        element.style.display = "flex"
+
+    })
+    userDisplay.innerHTML = userChoice.logo
+    computerDisplay.innerHTML = computerChoice.logo
+
+    setTimeout(hideDisplay, 1500)
+
+}
+
+
+function hideDisplay() {
+    display.forEach(element => {
+        element.style.display = "none"
+    })
+}
+/*........... Function to change LED lights score..... */
+let displayLight = (userResult) => {
     scoreBoardLightEl[gameRound].classList.remove('led-blank')
 
     if (userResult == 'draw')
@@ -80,10 +133,13 @@ let gameStart = (userChoice, computerChoice) => {
     else
         scoreBoardLightEl[gameRound].classList.add('led-red')
 
-
-    console.log(`gameround= ${gameRound}`)
     gameRound += 1
-    console.log(`gameround= ${gameRound}`)
+
+    // enabling button.............
+    if (gameRound < 5) {
+        for (item in userSelectionButtonEl)
+            userSelectionButtonEl[item].disabled = false
+    }
     if (gameRound == 5) {
         console.log(`computer score=${computerScore}, player score= ${playerScore}`)
     }
