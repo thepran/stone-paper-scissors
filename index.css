@@ -21,7 +21,8 @@
   justify-content: center;
   align-items: center;
   background-color: #000;
-  width: 250px;
+  background: linear-gradient(315deg, #000000 0%, #201f1f 74%);
+  width: 300px;
   padding: 10px 20px;
   margin: 40px auto;
   margin-top: 4rem;
@@ -63,27 +64,39 @@
 .game-play-container .display-container {
   /* background-color: yellow; */
   width: 100%;
-  margin: 4rem auto;
-  margin-bottom: 1rem;
+  margin: 1rem auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
   /* padding: 50px 0; */
+}
+.game-play-container .display-container::before {
+  content: "";
+  position: relative;
+  display: block;
+  width: 90%;
+  height: 2px;
+  background-color: #4644448c;
 }
 .game-play-container .display-container::after {
   content: "";
   position: relative;
   display: block;
   width: 90%;
-  height: 1px;
-  background-color: #312f2f8c;
-  margin: 2rem;
+  height: 2px;
+  background-color: #4644448c;
+  margin: 1rem;
+}
+.game-play-container .display-container .display-box h3 {
+  color: #6d6767;
+  text-align: center;
+  margin-bottom: 10px;
 }
 .game-play-container .display-container .display {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 7px;
   background-color: #0000008c;
   display: flex;
@@ -95,7 +108,7 @@
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background-color: pink;
+  background: linear-gradient(180deg, #eacda3, #8b7d6b);
   display: none;
   justify-content: center;
   align-items: center;
@@ -112,14 +125,27 @@
   justify-content: center;
   gap: 2rem;
   margin: 10px auto;
+  flex-wrap: wrap;
 }
-
+.game-play-container .user-selection-container h3 {
+  display: block;
+  width: 100%;
+  color: rgb(161, 147, 147);
+  text-align: center;
+}
 .game-play-container .user-selection {
   width: 70px;
   height: 70px;
   border-radius: 50%;
+  background: linear-gradient(to right, #c8d6b9, #96c6ee);
+  cursor: pointer;
+  border: none;
 }
+.game-play-container .user-selection:disabled {
+  background: #a89bad;
 
+  cursor: not-allowed;
+}
 footer {
   text-align: center;
   bottom: 5px;

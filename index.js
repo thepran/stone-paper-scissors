@@ -91,8 +91,11 @@ let gameStart = (userChoice, computerChoice) => {
         }
 
     /* disable button after each click, will only be enable when lights are displayed */
-    for (item in userSelectionButtonEl)
+    for (item in userSelectionButtonEl) {
         userSelectionButtonEl[item].disabled = true
+        // userSelectionButtonEl[item].style['background-color'] = "green"
+    }
+    console.log("hhhhh")
 
     setTimeout(displaySelection, 200, computerChoice, userChoice, userResult)
     setTimeout(displayLight, 1500, userResult)
