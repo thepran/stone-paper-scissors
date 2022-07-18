@@ -25,8 +25,18 @@ const scoreBoardLightEl = document.querySelectorAll(".led-light")
 const display = document.querySelectorAll(".selection-display")
 const userDisplay = document.querySelector("#user-display")
 const computerDisplay = document.querySelector("#computer-display")
+const userScoreDisplatEl = document.querySelector("#player-score-display")
+const computerScoreDisplatEl = document.querySelector("#computer-score-display")
+const gameResultDisplayEl = document.querySelector(".game-result")
+const homeContainer = document.querySelector("#game-start-container")
+const gamePlayContainer = document.querySelector("#game-play-container")
+const resultContainer = document.querySelector("#game-result-container")
+const playAgainBtnEl = document.querySelector("#play-again-btn")
+const homeBtnEl = document.querySelector("#back-btn")
+const playBtnEl = document.querySelector("#play-btn")
 
-
+gamePlayContainer.style.display = "none"
+resultContainer.style.display = "none"
 
 let computerPlay = () => {
     let randomSelection = gameSelection[Math.floor(Math.random() * gameSelection.length)]
@@ -39,7 +49,7 @@ userSelectionButtonEl.forEach(option => {
     option.addEventListener("click", () => {
         let userChoice = gameSelection[option.id]
         let computerChoice = computerPlay()
-        gameStart(userChoice, computerChoice)
+        gamePlay(userChoice, computerChoice)
 
 
         /* disable button after all rounds completed */
@@ -51,7 +61,7 @@ userSelectionButtonEl.forEach(option => {
 })
 
 
-let gameStart = (userChoice, computerChoice) => {
+let gamePlay = (userChoice, computerChoice) => {
     let userResult = ''
     let userValue = userChoice.value
     let computerValue = computerChoice.value
@@ -86,16 +96,13 @@ let gameStart = (userChoice, computerChoice) => {
         }
         else {
             userResult = 'win'
-            console.log("win")
             playerScore += 1
         }
 
     /* disable button after each click, will only be enable when lights are displayed */
     for (item in userSelectionButtonEl) {
         userSelectionButtonEl[item].disabled = true
-        // userSelectionButtonEl[item].style['background-color'] = "green"
     }
-    console.log("hhhhh")
 
     setTimeout(displaySelection, 200, computerChoice, userChoice, userResult)
     setTimeout(displayLight, 1500, userResult)
@@ -116,6 +123,7 @@ let displaySelection = (computerChoice, userChoice) => {
     setTimeout(hideDisplay, 1500)
 
 }
+
 
 
 function hideDisplay() {
@@ -145,5 +153,61 @@ let displayLight = (userResult) => {
     }
     if (gameRound == 5) {
         console.log(`computer score=${computerScore}, player score= ${playerScore}`)
+        resultDisplay(computerScore, playerScore)
+        resultContainer.style.display = "block"
+        gamePlayContainer.style.display = "none"
     }
 }
+
+let resultDisplay = (computerScore, playerScore) => {
+    userScoreDisplatEl.textContent = playerScore
+    computerScoreDisplatEl.textContent = computerScore
+    if (computerScore == playerScore)
+        gameResultDisplayEl.textContent = 'Draw'
+    else if (computerScore > playerScore)
+        gameResultDisplayEl.textContent = "You Lose!"
+    else
+        gameResultDisplayEl.textContent = "You Win!"
+}
+
+playAgainBtnEl.addEventListener('click', () => {
+    resetGame()
+    resultContainer.style.display = "none"
+    gamePlayContainer.style.display = "block"
+
+})
+
+let resetGame = () => {
+
+    /* reset led lights................*/
+    scoreBoardLightEl.forEach(element => {
+        element.classList.remove('led-red')
+        element.classList.remove('led-yellow')
+        element.classList.remove('led-green')
+        element.classList.add('led-blank')
+    });
+
+    /* reset scores............ */
+    gameRound = 0
+    playerScore = 0
+    computerScore = 0
+    userResult = ''
+
+    /*enable users selection buttons */
+
+    for (item in userSelectionButtonEl)
+        userSelectionButtonEl[item].disabled = false
+
+}
+
+playBtnEl.addEventListener('click', () => {
+    homeContainer.style.display = "none"
+    gamePlayContainer.style.display = "block"
+
+})
+
+homeBtnEl.addEventListener('click', () => {
+    resetGame()
+    resultContainer.style.display = "none"
+    homeContainer.style.display = "block"
+})

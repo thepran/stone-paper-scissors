@@ -7,12 +7,32 @@
     <link rel="shortcut icon" href="#" type="image/x-icon" />
     <title>Document</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
     <div class="container">
-      <div class="game-start-container"></div>
-      <div class="game-play-container">
+      <div class="sub-container" id="game-start-container">
+        <h1>
+          <span>ROCK</span>
+          <span>PAPER</span>
+          <span>SCISSORS</span>
+        </h1>
+        <div class="game-rule">
+          <p>Rocks Beats Scissors</p>
+          <p>Scissors beats Paper</p>
+          <p>Paper beats Rock</p>
+        </div>
+        <div class="play-btn-container">
+          <button id="play-btn">Play</button>
+        </div>
+      </div>
+      <div class="sub-container" id="game-play-container">
         <div class="scoreboard">
           <div class="led-light led-blank" id="led1"></div>
           <div class="led-light led-blank" id="led2"></div>
@@ -49,7 +69,29 @@
           </button>
         </div>
       </div>
-      <div class="game-result-container"></div>
+      <div class="sub-container" id="game-result-container">
+        <div class="game-over">
+          <img
+            src="https://pngimg.com/uploads/game_over/game_over_PNG14.png"
+            alt="GAME OVER"
+          />
+        </div>
+        <div class="display-container">
+          <div class="display">
+            <h3>Your Score</h3>
+            <div class="score-display" id="player-score-display"></div>
+          </div>
+          <div class="display">
+            <h3>Computer</h3>
+            <div class="score-display" id="computer-score-display"></div>
+          </div>
+          <div class="game-result"></div>
+        </div>
+        <div class="game-option">
+          <button id="play-again-btn">Play Again</button>
+          <button id="back-btn">Home</button>
+        </div>
+      </div>
 
       <footer>
         <p>Icons by <a target="_blank" href="https://icons8.com">Icons8</a></p>
