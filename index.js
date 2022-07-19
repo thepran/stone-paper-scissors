@@ -104,7 +104,7 @@ let gamePlay = (userChoice, computerChoice) => {
         userSelectionButtonEl[item].disabled = true
     }
 
-    setTimeout(displaySelection, 200, computerChoice, userChoice, userResult)
+    setTimeout(displaySelection, 200, computerChoice, userChoice)
     setTimeout(displayLight, 1500, userResult)
 
 
